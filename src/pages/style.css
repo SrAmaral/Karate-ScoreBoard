@@ -1,0 +1,167 @@
+#container {
+  width: 100vw;
+  height: 100vh;
+  
+  background-color: #252525;
+}
+
+.header {
+  width: 100vw;
+  height: 25vh;
+
+  display: flex;
+}
+
+.header p {
+  font-size: 4rem;
+  font-family: Archivo;
+  color: #EBEBEB;
+}
+
+.layer-aka{
+  display: flex;
+  flex: 1;
+
+  justify-content: center;
+  align-items: flex-end;
+}
+.spacer {
+  flex: 1;
+}
+.layer-ao {
+  display: flex;
+  flex: 1;
+
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.mid-page {
+  width: 100vw;
+  height: 30vh;
+
+  display: flex;
+}
+
+.points-aka {
+  display: flex;
+  flex: 1;
+
+  justify-content: center;
+  align-items: center;
+}
+.points-aka p {
+  font-size: 15rem;
+  font-family: Roboto;
+  font-weight: 300;
+  color: #EB4137;
+}
+
+.points-aka img {
+  height: 2.5rem;
+  margin: 0 1rem;
+  opacity: 50%;
+  cursor: pointer;
+}
+.points-aka img:hover {
+  height: 3rem;
+  opacity: 100%;
+}
+
+.timer {
+  display: flex;
+  flex: 1;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.timer {
+
+  font-size: 7rem;
+  font-family: Roboto;
+  font-weight: 300;
+  color: #EBEBEB;
+}
+
+.points-ao {
+  display: flex;
+  flex: 1;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.points-ao p {
+  font-size: 15rem;
+  font-family: Roboto;
+  font-weight: 300;
+  color:#3C40C6;
+}
+
+.points-ao img {
+  height: 2.5rem;
+  margin: 0 1rem;
+  opacity: 50%;
+  cursor: pointer;
+}
+.points-ao img:hover {
+  height: 3rem;
+  opacity: 100%;
+}
+
+.footer {
+  width: 100vw;
+  height: 45vh;
+
+  display: flex;
+}
+
+.faults-aka {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.faults-ao {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.faults-group {
+  display: flex;
+  margin-right: 1rem;
+  flex-direction: row;
+}
+
+.fault {
+  display: flex;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+
+  flex-direction: column;
+}
+
+.faults-group p {
+  display: flex;
+  justify-content: center;
+  color: #EBEBEB;
+  font-family: Archivo;
+
+  margin-bottom: .5rem;
+}
+
+.fault-secondary {
+  margin-right: 1rem; 
+}
+
+.faults-ao {
+  flex: 1;
+}
