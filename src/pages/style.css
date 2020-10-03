@@ -77,12 +77,46 @@
 }
 
 .timer {
-
+  display: flex;
+  flex-direction: column;
+  
   font-size: 7rem;
   font-family: Roboto;
   font-weight: 300;
   color: #EBEBEB;
 }
+
+.timer-buttons {
+  display: flex;
+  flex-direction: row;
+
+  margin-bottom: 3rem;
+  margin-top: -5rem;
+  cursor: pointer;
+}
+
+.timer-button {
+  background-color: #252525;
+
+  font-size: 2rem;
+  font-family: Roboto;
+  font-weight: 300;
+  color: #EBEBEB;
+  margin-right: 3rem;
+}
+.timer-button :hover {
+  border-bottom: 1 solid #EBEBEB ;
+}
+.timer-button:last-child{
+  margin-right: 0rem;
+}
+
+.controller-timer {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
 
 .points-ao {
   display: flex;

@@ -10,6 +10,8 @@ import FaultRed from '../assets/icons/fault-red.svg';
 import FaultRedFalse from '../assets/icons/fault-red-false.svg';
 import FaultBlue from '../assets/icons/fault-blue.svg';
 import FaultBlueFalse from '../assets/icons/fault-blue-false.svg';
+import PlayImg from '../assets/icons/play.svg';
+import PauseImg from '../assets/icons/pause.svg';
 
 function ScoreBoard() {
 	const ArrayAkaFault = [
@@ -39,9 +41,9 @@ function ScoreBoard() {
 
 	const [pointsAka, setPointsAka] = useState(0);
 	const [pointsAo, setPointsAo] = useState(0);
-	const [minutes, setMinutes] = useState('00');
-	const [seconds, setSeconds] = useState('00');
-	const [timer, setTimer] = useState(true);
+	const [minutes, setMinutes] = useState(0);
+	const [seconds, setSeconds] = useState(0);
+	const [timer, setTimer] = useState(false);
 	const [akaFaults, setAkaFaults] = useState(ArrayAkaFault);
 	const [akaFaults2, setAkaFaults2] = useState(ArrayAkaFault2);
 	const [aoFaults, setAoFaults] = useState(ArrayAoFault);
@@ -90,6 +92,26 @@ function ScoreBoard() {
 			}
 		});
 	}
+	if (timer) {
+		if (seconds > 0 || minutes > 0) {
+			setTimeout(() => {
+				setSeconds(seconds - 1);
+			}, 1000);
+		}
+	}
+
+	function clearTimer() {
+		setMinutes(0);
+		setSeconds(0);
+	}
+
+	function initializeTimer() {
+		if (minutes !== 0 || seconds !== 0) {
+			setTimer(true);
+		} else {
+			alert('Impossivel iniciar sem um tempo');
+		}
+	}
 
 	return (
 		<div id="container">
@@ -112,9 +134,45 @@ function ScoreBoard() {
 					<img src={ArrowRightRed} onClick={() => setPointsAka(pointsAka + 1)} />
 				</div>
 				<div className="timer">
+					<div className="timer-buttons">
+						<div
+							className="timer-button"
+							style={timer ? { visibility: 'hidden' } : { visibility: 'visible' }}
+							onClick={() => setMinutes(minutes + 1)}
+						>
+							+1m
+						</div>
+						<div
+							className="timer-button"
+							style={timer ? { visibility: 'hidden' } : { visibility: 'visible' }}
+							onClick={() => setSeconds(seconds + 30)}
+						>
+							+30s
+						</div>
+						<div
+							className="timer-button"
+							style={timer ? { visibility: 'hidden' } : { visibility: 'visible' }}
+							onClick={() => clearTimer()}
+						>
+							clear
+						</div>
+					</div>
 					<p>
-						{minutes}:{seconds}
+						{minutes < 10 ? '0' + minutes : minutes}:
+						{seconds < 10 ? '0' + seconds : seconds}
 					</p>
+					<div className="controller-timer">
+						<img
+							src={PlayImg}
+							style={timer ? { visibility: 'hidden' } : { visibility: 'visible' }}
+							onClick={() => initializeTimer()}
+						/>
+						<img
+							src={PauseImg}
+							style={!timer ? { visibility: 'hidden' } : { visibility: 'visible' }}
+							onClick={() => setTimer(false)}
+						/>
+					</div>
 				</div>
 				<div className="points-ao">
 					<img
