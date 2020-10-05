@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './style.css';
 
@@ -12,6 +12,7 @@ import FaultBlue from '../assets/icons/fault-blue.svg';
 import FaultBlueFalse from '../assets/icons/fault-blue-false.svg';
 import PlayImg from '../assets/icons/play.svg';
 import PauseImg from '../assets/icons/pause.svg';
+import { PointsAka } from './style';
 
 function ScoreBoard() {
 	const ArrayAkaFault = [
@@ -41,8 +42,9 @@ function ScoreBoard() {
 
 	const [pointsAka, setPointsAka] = useState(0);
 	const [pointsAo, setPointsAo] = useState(0);
-	const [minutes, setMinutes] = useState(0);
+	const [minutes, setMinutes] = useState(1);
 	const [seconds, setSeconds] = useState(0);
+	const [time, setTime] = useState(0);
 	const [timer, setTimer] = useState(false);
 	const [akaFaults, setAkaFaults] = useState(ArrayAkaFault);
 	const [akaFaults2, setAkaFaults2] = useState(ArrayAkaFault2);
@@ -92,26 +94,86 @@ function ScoreBoard() {
 			}
 		});
 	}
+	function initializeTimer() {
+		if (!timer) {
+			if (time > 0) {
+				setTimer(true);
+				setPointsAka(0);
+				setPointsAo(0);
+			} else {
+				alert('Impossivel iniciar sem um tempo');
+			}
+		} else {
+			setTimer(false);
+		}
+	}
+
 	if (timer) {
-		if (seconds > 0 || minutes > 0) {
+		if (time != 0) {
 			setTimeout(() => {
-				setSeconds(seconds - 1);
+				if (seconds != 0) {
+					setSeconds(seconds - 1);
+					setTime(time - 1);
+				}
+				if (seconds <= 0 && minutes > 0) {
+					setSeconds(59);
+				}
+				setTime(time - 1);
 			}, 1000);
 		}
 	}
 
 	function clearTimer() {
-		setMinutes(0);
-		setSeconds(0);
+		finishStates();
 	}
 
-	function initializeTimer() {
-		if (minutes !== 0 || seconds !== 0) {
-			setTimer(true);
-		} else {
-			alert('Impossivel iniciar sem um tempo');
-		}
+	function finishStates() {
+		setTimer(false);
+		setTime(0);
+		setSeconds(0);
+		setMinutes(0);
+		setPointsAka(0);
+		setPointsAo(0);
+		setAkaFaults(ArrayAkaFault);
+		setAkaFaults2(ArrayAkaFault2);
+		setAoFaults(ArrayAoFault);
+		setAoFaults2(ArrayAoFault2);
 	}
+	useEffect(() => {
+		setMinutes(Math.floor(time / 60));
+		if (seconds > 59) {
+			setSeconds(0);
+		}
+
+		if (time === 0 && timer) {
+			if (pointsAka > pointsAo) {
+				alert('Aka venceu');
+			}
+			if (pointsAo > pointsAka) {
+				alert('Ao venceu');
+			}
+			finishStates();
+		}
+		if (pointsAka - pointsAo >= 8 && timer) {
+			alert('Aka venceu');
+			setTimer(false);
+		}
+		if (pointsAo - pointsAka >= 8 && timer) {
+			alert('Ao venceu');
+			setTimer(false);
+		}
+	}, [time]);
+
+	function onMinutes() {
+		setTime(time + 60);
+		setSeconds(seconds + 60);
+	}
+	function onSeconds() {
+		setTime(time + 30);
+		setSeconds(seconds + 30);
+	}
+
+	console.log(minutes, '  ', seconds, '===', time);
 
 	return (
 		<div id="container">
@@ -138,14 +200,14 @@ function ScoreBoard() {
 						<div
 							className="timer-button"
 							style={timer ? { visibility: 'hidden' } : { visibility: 'visible' }}
-							onClick={() => setMinutes(minutes + 1)}
+							onClick={onMinutes}
 						>
 							+1m
 						</div>
 						<div
 							className="timer-button"
 							style={timer ? { visibility: 'hidden' } : { visibility: 'visible' }}
-							onClick={() => setSeconds(seconds + 30)}
+							onClick={onSeconds}
 						>
 							+30s
 						</div>
@@ -157,20 +219,18 @@ function ScoreBoard() {
 							clear
 						</div>
 					</div>
-					<p>
+					<p
+						style={
+							seconds <= 30 && minutes == 0 ? { color: '#EB4137' } : { color: '#EBEBEB' }
+						}
+					>
 						{minutes < 10 ? '0' + minutes : minutes}:
 						{seconds < 10 ? '0' + seconds : seconds}
 					</p>
-					<div className="controller-timer">
+					<div className="controller-timer" onClick={() => initializeTimer()}>
 						<img
-							src={PlayImg}
-							style={timer ? { visibility: 'hidden' } : { visibility: 'visible' }}
+							src={`${!timer ? PlayImg : PauseImg}`}
 							onClick={() => initializeTimer()}
-						/>
-						<img
-							src={PauseImg}
-							style={!timer ? { visibility: 'hidden' } : { visibility: 'visible' }}
-							onClick={() => setTimer(false)}
 						/>
 					</div>
 				</div>
